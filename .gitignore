@@ -1,0 +1,35 @@
+# General
+**/node_modules/
+**/dist/
+**/build/
+**/public/build
+**/.env
+**/.env.*
+!**/.env.example
+
+# Laravel Specific
+**/vendor/
+**/storage/*.key
+**/storage/logs/
+**/storage/framework/cache/data/*
+**/storage/framework/sessions/*
+**/storage/framework/views/*.php
+**/storage/framework/testing/
+**/public/hot
+**/public/storage
+
+# IDE Specific
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS
+.DS_Store
+
+# PHPUnit
+.phpunit.result.cache
+
+# Mantener los archivos Excel en la raíz (No ignorarlos)
+!*.xls
+!*.xlsx

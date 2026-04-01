@@ -1,0 +1,28 @@
+/* 1. Regular (Peso 400) */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('@/assets/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 2. SemiBold (Peso 600) */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('@/assets/fonts/OpenSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* 3. Bold (Peso 700) */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('@/assets/fonts/OpenSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Directivas de Tailwind (NO BORRAR ESTO) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
