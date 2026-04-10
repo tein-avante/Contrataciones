@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\Idioma;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class IdiomaController extends Controller
 {
@@ -18,6 +19,8 @@ class IdiomaController extends Controller
         ]);
 
         $idioma = $empleado->idiomas()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($idioma, 201);
     }
@@ -33,12 +36,17 @@ class IdiomaController extends Controller
 
         $idioma->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($idioma);
     }
 
     public function destroy(Idioma $idioma)
     {
         $idioma->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }

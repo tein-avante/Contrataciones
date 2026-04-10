@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SolicitudCargaCreada;
-
+use App\Services\SistemaService;
 class SolicitudCargaController extends Controller
 {
     /**
@@ -40,6 +40,8 @@ class SolicitudCargaController extends Controller
         ]);
 
         $empleado->notify(new SolicitudCargaCreada($solicitud));
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($solicitud, 201);
     }
@@ -138,6 +140,8 @@ class SolicitudCargaController extends Controller
                 'fecha_aviso'  => now(),
             ]);
         }
+
+        SistemaService::incrementarOperaciones();
 
         return view('public.upload-success', [
             'ticket' => $solicitudCarga->ticket

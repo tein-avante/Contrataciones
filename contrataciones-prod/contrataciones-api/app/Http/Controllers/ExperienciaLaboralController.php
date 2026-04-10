@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\ExperienciaLaboral;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class ExperienciaLaboralController extends Controller
 {
@@ -24,6 +25,8 @@ class ExperienciaLaboralController extends Controller
         ]);
 
         $experiencia = $empleado->experienciasLaborales()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($experiencia, 201);
     }
@@ -45,12 +48,17 @@ class ExperienciaLaboralController extends Controller
 
         $experienciaLaboral->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($experienciaLaboral);
     }
 
     public function destroy(ExperienciaLaboral $experienciaLaboral)
     {
         $experienciaLaboral->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }

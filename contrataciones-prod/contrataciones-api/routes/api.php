@@ -17,6 +17,7 @@ use App\Http\Controllers\CursoEventoController;
 use App\Http\Controllers\IdiomaController;
 use App\Http\Controllers\ExperienciaLaboralController;
 use App\Http\Controllers\ReferenciaPersonalController;
+use App\Http\Controllers\SistemaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Autenticación
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) { return $request->user(); });
+
+    // Información del Sistema
+    Route::get('/sistema/info', [SistemaController::class, 'info']);
 
     // CRUD de Empleados
     Route::get('/empleados/export/excel', [EmpleadoController::class, 'exportExcel']);

@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router' // Usamos Vue Router
 import { useAuthStore } from '../stores/auth' // Usamos el Store de Auth
 import ApplicationMark from '@/components/ApplicationMark.vue'
 import NotificationBell from '@/components/NotificationBell.vue'
+import axios from '../lib/axios.js'
 
 defineProps({
   title: String,
@@ -18,13 +19,24 @@ const handleLogout = async () => {
   await authStore.logout()
   router.push('/') // Redirigir al login
 }
+
+const sistemaInfo = ref({ version: null, operaciones: null })
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/sistema/info')
+    sistemaInfo.value = response.data
+  } catch (error) {
+    console.error('Error al obtener la información del sistema:', error)
+  }
+})
 </script>
 
 <template>
   <div>
     <!-- Eliminamos <Head> y <Banner> porque son de Inertia/Jetstream -->
 
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen flex flex-col bg-gray-50">
       <!-- BARRA DE NAVEGACIÓN -->
       <nav class="bg-avante-primary border-b border-avante-dark shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -197,6 +209,26 @@ const handleLogout = async () => {
           </div>
         </div>
       </main>
+
+      <!-- Footer con info del sistema -->
+      <footer class="bg-white border-t border-gray-200 mt-auto w-full" v-if="sistemaInfo.version">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center h-14">
+          <div class="text-xs text-gray-400 font-medium tracking-wide">
+            &copy; {{ new Date().getFullYear() }} Sistema de Contrataciones
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center bg-gray-50 border border-gray-200 rounded-full px-3 py-1 shadow-sm transition hover:shadow cursor-default" title="Versión actual del sistema">
+              <svg class="w-3 h-3 text-gray-400 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+              <span class="text-[11px] font-semibold text-gray-600 tracking-wider">v{{ sistemaInfo.version }}</span>
+            </div>
+
+            <div v-if="sistemaInfo.operaciones !== null" class="flex items-center bg-blue-50 border border-blue-200 rounded-full px-3 py-1 shadow-sm transition hover:shadow hover:bg-blue-100 cursor-default" title="Operaciones totales en el sistema">
+              <svg class="w-3 h-3 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              <span class="text-[11px] font-bold text-blue-700 tracking-wider">{{ parseInt(sistemaInfo.operaciones).toLocaleString() }} ops</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
 </template>

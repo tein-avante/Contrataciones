@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\DatoFamiliar;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class DatoFamiliarController extends Controller
 {
@@ -19,6 +20,8 @@ class DatoFamiliarController extends Controller
         ]);
 
         $datoFamiliar = $empleado->datosFamiliares()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($datoFamiliar, 201);
     }
@@ -35,12 +38,17 @@ class DatoFamiliarController extends Controller
 
         $datoFamiliar->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($datoFamiliar);
     }
 
     public function destroy(DatoFamiliar $datoFamiliar)
     {
         $datoFamiliar->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }

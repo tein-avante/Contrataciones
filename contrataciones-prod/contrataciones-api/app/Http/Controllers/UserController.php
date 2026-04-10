@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use App\Services\SistemaService;
 
 class UserController extends Controller
 {
@@ -36,6 +37,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
+
+        SistemaService::incrementarOperaciones();
 
         return back()->with('success', 'Usuario creado correctamente.');
     }
@@ -69,6 +72,8 @@ class UserController extends Controller
 
          $user->update($userData);
 
+         SistemaService::incrementarOperaciones();
+
          return response()->json(['message' => 'Usuario actualizado correctamente.']);
      }
 
@@ -81,6 +86,8 @@ class UserController extends Controller
         }
 
         $user->delete();
+
+        SistemaService::incrementarOperaciones();
 
         return back()->with('success', 'Usuario eliminado correctamente.');
     }

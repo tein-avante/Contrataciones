@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\Estudio;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class EstudioController extends Controller
 {
@@ -20,6 +21,8 @@ class EstudioController extends Controller
         ]);
 
         $estudio = $empleado->estudios()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($estudio, 201);
     }
@@ -37,12 +40,17 @@ class EstudioController extends Controller
 
         $estudio->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($estudio);
     }
 
     public function destroy(Estudio $estudio)
     {
         $estudio->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }

@@ -1,0 +1,22 @@
+ M contrataciones-app/package-lock.json
+ M contrataciones-app/src/layouts/AppLayout.vue
+ M contrataciones-app/src/views/EmpleadosCreate.vue
+ M contrataciones-app/src/views/EmpleadosEdit.vue
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/AuthController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/CursoEventoController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/DatoFamiliarController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/DocumentoController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/EmpleadoController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/EstudioController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/ExperienciaLaboralController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/IdiomaController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/ReferenciaPersonalController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/SolicitudCargaController.php
+ M contrataciones-prod/contrataciones-api/app/Http/Controllers/UserController.php
+ M contrataciones-prod/contrataciones-api/routes/api.php
+?? contrataciones-prod/contrataciones-api/app/Http/Controllers.zip
+?? contrataciones-prod/contrataciones-api/app/Http/Controllers/SistemaController.php
+?? contrataciones-prod/contrataciones-api/app/Models/SistemaConfig.php
+?? contrataciones-prod/contrataciones-api/app/Services/SistemaService.php
+?? contrataciones-prod/contrataciones-api/database/migrations/2026_04_01_000000_create_sistema_configs_table.php
+?? git_status_root.txt

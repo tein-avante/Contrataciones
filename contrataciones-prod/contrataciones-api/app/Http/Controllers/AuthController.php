@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Services\SistemaService;
 
 class AuthController extends Controller
 {
@@ -45,6 +46,8 @@ class AuthController extends Controller
         // Generación del nuevo token único para la sesión actual
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
@@ -62,6 +65,8 @@ class AuthController extends Controller
     {
         // Revoca específicamente el token que se usó para esta petición
         $request->user()->currentAccessToken()->delete();
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json(['message' => 'Sesión cerrada correctamente.']);
     }

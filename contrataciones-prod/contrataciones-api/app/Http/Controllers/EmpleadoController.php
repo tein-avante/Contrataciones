@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\Services\SistemaService;
 
 class EmpleadoController extends Controller
 {
@@ -51,6 +52,8 @@ class EmpleadoController extends Controller
             $empleado->semaforo = $status;
             return $empleado;
         });
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($empleados);
     }
@@ -103,6 +106,9 @@ class EmpleadoController extends Controller
         }
 
         $empleado = Empleado::create($validatedData);
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json($empleado, 201); // 201 = Created
     }
 
@@ -146,6 +152,8 @@ class EmpleadoController extends Controller
                 }
             }
         }
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($empleado);
     }
@@ -202,6 +210,9 @@ class EmpleadoController extends Controller
         }
 
         $empleado->update($validatedData);
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json($empleado);
     }
 
@@ -215,6 +226,9 @@ class EmpleadoController extends Controller
             $documento->delete();
         }
         $empleado->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 
@@ -237,6 +251,8 @@ class EmpleadoController extends Controller
         }
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.oferta-servicio', compact('empleado'));
+
+        SistemaService::incrementarOperaciones();
 
         return $pdf->download('Oferta_Servicio_' . str_replace(' ', '_', $empleado->nombre) . '.pdf');
     }
@@ -343,6 +359,7 @@ class EmpleadoController extends Controller
 
             fclose($file);
         };
+        SistemaService::incrementarOperaciones();
 
         return response()->stream($callback, 200, $headers);
     }

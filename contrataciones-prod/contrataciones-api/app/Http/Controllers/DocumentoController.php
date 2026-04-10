@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Notifications\SolicitudCargaCreada;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use App\Services\SistemaService;
 
 class DocumentoController extends Controller
 {
@@ -33,6 +34,8 @@ class DocumentoController extends Controller
                 'estado' => 'Vigente',
             ]);
 
+            SistemaService::incrementarOperaciones();
+
             return response()->json($documento, 201);
 
         } catch (ValidationException $e) {
@@ -56,6 +59,9 @@ class DocumentoController extends Controller
     {
         Storage::disk('public')->delete($documento->archivo);
         $documento->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 
@@ -79,6 +85,8 @@ public function aceptar(Request $request, Documento $documento)
 
     // 3. (Opcional) Si había una solicitud asociada a este documento, asegúrate de que esté cerrada
     // Esto ya lo hace el PublicUploadController, pero no está de más.
+
+    SistemaService::incrementarOperaciones();
 
     return response()->json(['message' => 'Documento aceptado y vigente.']);
 }
@@ -105,6 +113,9 @@ public function aceptar(Request $request, Documento $documento)
         ]);
 
         $empleado->notify(new SolicitudCargaCreada($nuevaSolicitud));
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json($nuevaSolicitud, 201);
     }
 }

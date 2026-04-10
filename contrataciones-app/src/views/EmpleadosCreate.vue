@@ -177,7 +177,6 @@ const handleFileChange = (event) => {
               v-model="form.cedula_marina"
               id="cedula_marina"
               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              required
             />
             <p v-if="errors.cedula_marina" class="text-sm text-red-600 mt-1">{{ errors.cedula_marina[0] }}</p>
           </div>

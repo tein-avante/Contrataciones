@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\CursoEvento;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class CursoEventoController extends Controller
 {
@@ -19,6 +20,8 @@ class CursoEventoController extends Controller
         ]);
 
         $cursoEvento = $empleado->cursosEventos()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($cursoEvento, 201);
     }
@@ -35,12 +38,17 @@ class CursoEventoController extends Controller
 
         $cursoEvento->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($cursoEvento);
     }
 
     public function destroy(CursoEvento $cursoEvento)
     {
         $cursoEvento->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }

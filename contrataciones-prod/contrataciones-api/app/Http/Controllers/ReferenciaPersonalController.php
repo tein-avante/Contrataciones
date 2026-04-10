@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Models\ReferenciaPersonal;
 use Illuminate\Http\Request;
+use App\Services\SistemaService;
 
 class ReferenciaPersonalController extends Controller
 {
@@ -18,6 +19,8 @@ class ReferenciaPersonalController extends Controller
         ]);
 
         $referencia = $empleado->referenciasPersonales()->create($validated);
+
+        SistemaService::incrementarOperaciones();
 
         return response()->json($referencia, 201);
     }
@@ -33,12 +36,17 @@ class ReferenciaPersonalController extends Controller
 
         $referenciaPersonal->update($validated);
 
+        SistemaService::incrementarOperaciones();
+
         return response()->json($referenciaPersonal);
     }
 
     public function destroy(ReferenciaPersonal $referenciaPersonal)
     {
         $referenciaPersonal->delete();
+
+        SistemaService::incrementarOperaciones();
+
         return response()->json(null, 204);
     }
 }
